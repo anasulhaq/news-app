@@ -1,0 +1,136 @@
+
+<body>
+<div class="content">
+  <div>
+    <p>
+      <mat-toolbar color="primary">
+        <img src="https://news.ycombinator.com/favicon.ico" width="40" height="40" />
+        <h1>
+          <b class="buttonFontTop" style="font-size: x-large; "> | Hacker News </b>
+        </h1>
+        <button mat-button class="buttonFontTop" (click)="changeStoryType('latest')">Home</button>
+        <button mat-button class="buttonFontTop" (click)="changeStoryType('Ask')"> Ask</button>
+        <button mat-button class="buttonFontTop" (click)="changeStoryType('Show')"> Show</button>
+        <button mat-button class="buttonFontTop" (click)="changeStoryType('Job')"> Job </button>
+        <span class="example-spacer"></span>
+        <button mat-icon-button class="twitter"></button>
+        <mat-icon class = "social"  matTooltip="twitter">
+          <a aria-label="Twitter" href="https://www.twitter.com"  target="_blank">
+            <img src="../../assets/twitter.svg" width="40" height="40"/>
+          </a>
+        </mat-icon>
+        <mat-icon class = "social"  matTooltip="twitter">
+          <a aria-label="Twitter" href="https://www.facebook.com"  target="_blank">
+            <img src="../../assets/facebook.svg" width="40" height="40"/>
+          </a>
+        </mat-icon>
+        <mat-icon style="margin-right: 40px;margin-bottom: 10px" matTooltip="Login">
+          <a mat-raised-button  aria-label="Login Button" href="https://news.ycombinator.com/login?goto=newest" target="_blank">Login</a>
+        </mat-icon>
+
+
+      </mat-toolbar>
+    </p>
+
+    <div class="example-header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Stories">
+      </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>  </th>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="avatar">
+        <th mat-header-cell *matHeaderCellDef > </th>
+        <td mat-cell *matCellDef="let element"> <img [src]="imagePath" style="height: 30px; width: 30px;" /></td>
+      </ng-container>
+
+      <ng-container matColumnDef="by">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><h4><b>Story By</b></h4></th>
+        <td mat-cell *matCellDef="let element"><b>{{element.by}}</b> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><h4><b>Story Title</b> </h4></th>
+        <td mat-cell *matCellDef="let element"> <b>{{element.title}}</b></td>
+      </ng-container>
+
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><h4> <b>Posted On</b></h4></th>
+        <td mat-cell *matCellDef="let element"> {{convertTime(element.time)}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> <h4><b>Type</b></h4> </th>
+        <td mat-cell *matCellDef="let element">{{element.type}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="goTo">
+        <th mat-header-cell *matHeaderCellDef><h4> <b>Go To Story</b> </h4></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button   aria-label="Button with a open in new tab icon" >
+            <a href="{{element.url}}"><mat-icon style="margin-top:10px;" matTooltip="Go To Story">open_in_new</mat-icon></a>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="share">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button aria-label="share button with a share icon">
+            <mat-icon matTooltip="Share">share</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="favorite">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="warn" aria-label="Mark favorite button with a heart icon">
+            <mat-icon matTooltip="Favorite">favorite</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="bookmark">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary" aria-label="Bookmark button with a bookmark icon">
+            <mat-icon matTooltip="Bookmark">bookmark</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+</div>
+<footer class="footer">
+  <div>
+    <footer>
+      <mat-paginator [pageSizeOptions]="[ 11, 25 ,50 ,100]" showFirstLastButtons></mat-paginator>
+      <mat-toolbar color="primary">
+        <mat-toolbar-row style="height: 20px;">
+          <span class="toolbarRow1">Applications are open for YC Winter 2022</span>
+        </mat-toolbar-row>
+        <mat-toolbar-row style="height: 42px;">
+          <span class="example-fill-remaining-space" style="margin-left: 555px">
+          <a mat-button class="buttonFontBelow" href="https://news.ycombinator.com/newsguidelines.html" target="_blank">Guidelines</a>
+          <a mat-button class="buttonFontBelow" href="https://news.ycombinator.com/newsfaq.html" target="_blank">FAQ</a>
+          <a mat-button class="buttonFontBelow" href="https://news.ycombinator.com/lists" target="_blank">Lists</a>
+          <a mat-button class="buttonFontBelow" href="https://news.ycombinator.com/security.html" target="_blank">Security</a>
+          <a mat-button class="buttonFontBelow" href="http://www.ycombinator.com/legal" target="_blank">Legal</a>
+          <a mat-button class="buttonFontBelow" href="http://www.ycombinator.com/apply" target="_blank">Apply to YC</a>
+          <a mat-button class="buttonFontBelow" href="mailto:anasul123@gmail.com?subject=Service Assistance Required">Contact</a>
+          </span>
+        </mat-toolbar-row>
+
+      </mat-toolbar>
+    </footer>
+  </div>
+</footer>
+</body>

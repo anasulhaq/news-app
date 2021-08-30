@@ -1,0 +1,79 @@
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 500px;
+}
+th.mat-header-cell {
+  text-align: left;
+  max-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+/*.flexExpand {*/
+/*  flex: 1 1 auto;*/
+/*}*/
+/*.example-fill-remaining-space {*/
+/*  flex: 1 1 auto;*/
+/*  margin-left: 90px;*/
+/*}*/
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+html, body {
+  height: 100%;
+}
+body {
+  height: 100%;
+  position: relative;
+}
+.content {
+  min-height: 100vh; /* will cover the 100% of viewport */
+  overflow: hidden;
+  display: block;
+  position: relative;
+  padding-bottom: 100px; /* height of your footer */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.buttonFontTop{
+  font: caption;
+  font-size: large;
+}
+.buttonFontBelow{
+  font: caption;
+  font-size: medium;
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.hyperLink
+{
+  color: whitesmoke;
+  text-decoration: none;
+}
+.toolbarRow1{
+  margin-left: 700px; font-size: medium; font: caption;margin-top: 23px;color: beige;
+}
+.social{
+  margin-right: 30px;margin-bottom: 10px
+}
