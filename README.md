@@ -13,6 +13,12 @@ Now on terminal type **' npm start '** it will start the application on your loc
 I have used Angular Material UI to design the Dashboard to list all the latest Stories, Job Stories, Ask Stories, and Show stories.
 To implement this I have used Angular Material Table, Toolbar, and Input fields and buttons. I have implemented a getNewStories API which returns the Items for that particular type of job-based on the URL Provided. Then I pass these Item ID's from that Api response and call another API getNewsItems API which provides me the JSON object based on ItemID provided.  These all Json Objects are pushed into the data source for Material Table Dash Board and are listed in UI.
 
+**PROJECT STRUCTURE : -**
+The application contains following:-
+Dashboard Component - Component that is responsible to create the view to display the stories. Also, to fetch details from data service.
+Data Service - A service is created to get all the data from the Hacker News API, based on type of Stories (latest, Ask, Job, Show).
+
+
 **FUNCTIONALITY:-**
 I have provided the capability to Search the Stories, Sort the user stories (Click on the header) based on column name.
 Also added Pagination for the stories thats can display 10,25,50 or 100 stories at a time.
