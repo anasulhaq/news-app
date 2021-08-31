@@ -40,10 +40,6 @@ export class MyDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(readonly dataService: DataService, readonly formBuilder: FormBuilder) {
   }
 
-  // range = new FormGroup({
-  //   username : new FormControl()
-  // });
-
    range = this.formBuilder.group({
     username : '',
   });
