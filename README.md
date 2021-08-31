@@ -15,6 +15,7 @@ To implement this I have used Angular Material Table, Toolbar, and Input fields 
 
 **FUNCTIONALITY:-**
 I have provided the capability to Search the Stories, Sort the user stories (Click on the header) based on column name.
+User can Go To any story of his choice by clicking the link 'Go To Story' for any story.
 I have also added a filter to filter on Story By (Column name) once all the stories are loaded from the API.
 
 For Accessibility, the User can navigate through the UI with the keyboard 
