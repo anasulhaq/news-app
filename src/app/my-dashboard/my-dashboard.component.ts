@@ -5,6 +5,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-my-dashboard',
@@ -32,10 +34,20 @@ export class MyDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   private dataCreated: any;
   public errorMessage: any;
+  private filteredByName: News;
+  private filteredData: News[];
 
-  constructor(readonly dataService: DataService) {
-
+  constructor(readonly dataService: DataService, readonly formBuilder: FormBuilder) {
   }
+
+  // range = new FormGroup({
+  //   username : new FormControl()
+  // });
+
+   range = this.formBuilder.group({
+    username : '',
+  });
+
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -45,15 +57,12 @@ export class MyDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
-    console.log('this.sort', this.sort, this.dataSource.sort);
     this.dataSource.paginator = this.paginator;
-    console.log('this.paginator', this.dataSource.paginator, this.paginator);
     }
 
   ngOnInit(): void {
     this.getStories(this.latestNewsUrl);
   }
-
 
   changeStoryType(val): void {
     this.newsStories = [];
@@ -69,34 +78,6 @@ export class MyDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  getStories(newsUrl: string): void {
-    this.subscription = this.dataService.getNewStories(newsUrl).subscribe((data: any) => {
-        console.log('fetching news', data);
-        if (data) {
-          data.forEach((storyId) => {
-            this.subscription2 = this.dataService.getNewsItems(storyId).subscribe((res: News) => {
-              this.newsStories.push(res);
-              console.log('ALL-DATA ask Stories', this.newsStories);
-              this.dataSource.data = this.newsStories;
-            }, (error) => {
-              console.error('error caught from getNewsItems in component', error);
-              // this.errorMessage = error;
-            });
-          });
-        }
-      }, (error) => {
-        console.error('error caught from getAskStories in component', error);
-         this.errorMessage = error;
-      });
-    }
-
-
-  applyFilter(filterValue: string): void {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
-
   convertTime(timestamp): string {
     const a = new Date(timestamp * 1000);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -108,6 +89,50 @@ export class MyDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     const sec = a.getSeconds();
     const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
     return time;
+  }
+
+  getStories(newsUrl: string): void {
+    this.subscription = this.dataService.getNewStories(newsUrl).subscribe((data: any) => {
+        if (data) {
+          data.forEach((storyId) => {
+            this.subscription2 = this.dataService.getNewsItems(storyId).subscribe((res: News) => {
+              this.newsStories.push(res);
+              this.dataSource.data = this.newsStories;
+            }, (error) => {
+              console.error('error caught from getNewsItems in component', error);
+               this.errorMessage = error;
+            });
+          });
+        }
+      }, (error) => {
+        console.error('error caught from getStories in component', error);
+         this.errorMessage = error;
+      });
+    }
+
+
+  applyFilter(filterValue: string): void {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+  searchByUserName(): void {
+    if (this.newsStories && this.newsStories.length > 0) {
+      if (this.range.value.username) {
+        this.dataSource.data = this.newsStories.filter(x => {
+          if (x && x.by != null) {
+            return  x.by === this.range.value.username;
+          }
+        });
+      }
+    }
+  }
+
+  resetFilter(): void {
+    this.range.patchValue( {'username': null} );
+    this.newsStories = [];
+    this.getStories(this.latestNewsUrl);
   }
 
 

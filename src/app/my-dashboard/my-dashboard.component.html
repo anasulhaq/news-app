@@ -2,6 +2,9 @@
 <body>
 <div class="content">
   <div>
+    <h1 *ngIf="errorMessage">
+      <p>We have Encountered the some error. Please try again Later.{{errorMessage}}</p>
+    </h1>
     <p>
       <mat-toolbar color="primary">
         <img src="https://news.ycombinator.com/favicon.ico" width="40" height="40" />
@@ -27,8 +30,6 @@
         <mat-icon style="margin-right: 40px;margin-bottom: 10px" matTooltip="Login">
           <a mat-raised-button  aria-label="Login Button" href="https://news.ycombinator.com/login?goto=newest" target="_blank">Login</a>
         </mat-icon>
-
-
       </mat-toolbar>
     </p>
 
@@ -36,8 +37,20 @@
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Stories">
       </mat-form-field>
+      <tr>
+        <td>
+          <div [formGroup]="range">
+          <input matInput formControlName="username"  placeholder="Filter by Username">
+          </div>
+        </td>
+        <td><button mat-raised-button aria-label="Username Filter" color="warn" (click)="searchByUserName()">Filter</button></td>
+        <td></td>
+        <td><button mat-raised-button aria-label="Reset Filter" style="margin-left: 10px;" (click)="resetFilter()">Reset</button></td>
+      </tr>
     </div>
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <mat-progress-spinner style="margin-left: 100px" value=50 mode="indeterminate" *ngIf="IsWait">
+    </mat-progress-spinner>
+    <table mat-table [dataSource]="dataSource" matSort >
 
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>  </th>

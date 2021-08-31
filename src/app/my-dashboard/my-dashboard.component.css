@@ -24,14 +24,6 @@ th.mat-sort-header-sorted {
   color: black;
 }
 
-/*.flexExpand {*/
-/*  flex: 1 1 auto;*/
-/*}*/
-/*.example-fill-remaining-space {*/
-/*  flex: 1 1 auto;*/
-/*  margin-left: 90px;*/
-/*}*/
-
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -76,4 +68,7 @@ body {
 }
 .social{
   margin-right: 30px;margin-bottom: 10px
+}
+.nameFilter{
+  width: 50px;
 }

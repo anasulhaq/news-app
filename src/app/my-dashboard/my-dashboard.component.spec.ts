@@ -18,12 +18,15 @@ import {
 } from '../testing-mocks';
 import {News} from '../news';
 import mock = jest.mock;
+import {FormBuilder} from '@angular/forms';
 
 describe('MyDashboardComponent', () => {
 
   let component: MyDashboardComponent;
   let fixture: ComponentFixture<MyDashboardComponent>;
   let dataService: DataService;
+
+  const formBuilder: FormBuilder = new FormBuilder();
 
   const mockDataService = {
     getNewStories : jest.fn( () => of(mockNewsData)),
@@ -36,7 +39,7 @@ describe('MyDashboardComponent', () => {
       imports: [RouterTestingModule, HttpClientTestingModule, HttpClientModule, RouterTestingModule,
         CdkTableModule, MatTableModule],
       declarations: [MyDashboardComponent],
-      providers: [{provide: DataService, useValue: mockDataService}]
+      providers: [{provide: DataService, useValue: mockDataService},{provide: FormBuilder, useValue: formBuilder}]
     }).compileComponents();
   }));
 
@@ -45,7 +48,10 @@ describe('MyDashboardComponent', () => {
 
     dataService = TestBed.get(DataService);
 
-    // component.dataSource = new MatTableDataSource<News>(mockTableDataSource);
+    // component.range = formBuilder.group({
+    //   username : '',
+    // });
+
     component = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -127,13 +133,16 @@ describe('MyDashboardComponent', () => {
       expect(component.dataSource.sort).toEqual(component.sort);
     });
 
-    // test('convertTime, test for called', () => {
-    //   const getInputParamSpy = jest.spyOn(component, 'convertTime');
-    //   const mockParam = '1567382400';
-    //   component.convertTime(mockParam);
-    //   expect(getInputParamSpy).toHaveBeenCalled();
-    //
-    // });
+    test('searchByUserName', () => {
+      const getInputParamSpy = jest.spyOn(component, 'searchByUserName');
+      component.searchByUserName();
+      expect(getInputParamSpy).toHaveBeenCalled();
+    });
+    test('resetFilter', () => {
+      const getInputParamSpy = jest.spyOn(component, 'resetFilter');
+      component.resetFilter();
+      expect(getInputParamSpy).toHaveBeenCalled();
+    });
   });
 
 
