@@ -1,6 +1,6 @@
 # news-app
 **News Stories Dashboard **
- This project is an Angular application In order to run this
+ This project is an Angular application that display Latest News Stories. In order to run this
  You should have Node installed on your machine.
  
 **-After cloning the Application  > Go to Project directory**
