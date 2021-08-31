@@ -9,7 +9,7 @@
 
 Now on terminal type **' npm start '** it will start the application on your local port localhost:4200.
 
-**WORKING : -**
+**LIBRARY USED : -**
 I have used Angular Material UI to design the Dashboard to list all the latest Stories, Job Stories, Ask Stories, and Show stories.
 To implement this I have used Angular Material Table, Toolbar, and Input fields and buttons. I have implemented a getNewStories API which returns the Items for that particular type of job-based on the URL Provided. Then I pass these Item ID's from that Api response and call another API getNewsItems API which provides me the JSON object based on ItemID provided.  These all Json Objects are pushed into the data source for Material Table Dash Board and are listed in UI.
 
